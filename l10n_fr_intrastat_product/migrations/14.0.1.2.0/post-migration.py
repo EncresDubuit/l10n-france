@@ -23,18 +23,17 @@ def update_l10n_fr_intrastat_product_declaration_year(env):
     openupgrade.logged_query(
         env.cr, """
         UPDATE l10n_fr_intrastat_product_declaration
-        SET year = {integer_year} || ''
-        """.format(integer_year=openupgrade.get_legacy_name("year"))
+        SET year = TO_CHAR(year_moved0, '0000')
+        """
     )
 
 
 def map_l10n_fr_intrastat_product_declaration_month(env):
-    openupgrade.map_values(
-        env.cr,
-        openupgrade.get_legacy_name("month"),
-        "month",
-        _months,
-        table="l10n_fr_intrastat_product_declaration",
+    openupgrade.logged_query(
+        env.cr, """
+        UPDATE l10n_fr_intrastat_product_declaration
+        SET month = TO_CHAR(month_moved0, '00')
+        """
     )
 
 

@@ -12,7 +12,7 @@ _rename_columns = {
 
 @openupgrade.migrate()
 def migrate(env, version):
-    openupgrade.rename_columns(env.cr, _rename_columns)
+    #openupgrade.rename_columns(env.cr, _rename_columns)
     openupgrade.add_fields(
         env,
         [
@@ -33,7 +33,7 @@ def migrate(env, version):
     sql_query = sql.SQL(
         """
     UPDATE l10n_fr_intrastat_service_declaration SET
-    start_date = to_date(CONCAT({}, '-', {}, '-01'), 'YYYY-MM-DD')
+    start_date = to_date(CONCAT(year, '-', month, '-01'), 'YYYY-MM-DD')
     """
-    ).format(sql.Identifier(year_col), sql.Identifier(month_col))
+    )
     openupgrade.logged_query(env.cr, sql_query)
